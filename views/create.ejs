@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Tạo sách mới</h1>
+    <form action="/book/create" method="post" enctype="multipart/form-data">
+        <label>Tên</label>
+        <input type="text" name="name">
+        <label>Giá</label>
+        <input type="text" name="price">
+        <label>Số lượng</label>
+        <input type="text" name="quantity">
+        <label>Tác giả</label>
+        <input type="text" name="author">
+        <button type="submit">Thêm</button>
+    </form>
+</body>
+</html>
