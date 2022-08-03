@@ -39,9 +39,21 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.get('/create', (req, res) => {
-    res.render('create')
+app.get('/', (req, res) => {
+    let selectQuery = `select * from books`;
+    connection.query(selectQuery, (err, result) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.render('view', {books: result});
+        }
+    })
 })
+
+app.get('/book/create', (req, res) => {
+    res.render('create');
+})
+
 app.post('/book/create', upload.none(), (req, res) => {
     let book = req.body;
     const insertQuery = `insert into books(name, price, quantity, author) values ('${book.name}', ${book.price}, ${book.quantity}, '${book.author}')`;
@@ -49,7 +61,40 @@ app.post('/book/create', upload.none(), (req, res) => {
         if(err){
             console.log(err);
         } else {
-            res.render('success');
+            res.redirect(301, '/')
+        }
+    })
+})
+
+app.get('/book/edit', (req, res) => {
+    let id = req.query.id;
+    let selectQuery = `select * from books where id=${id}`
+    connection.query(selectQuery, (err, result) => {
+        res.render('edit', {book: result[0]});
+    })
+})
+
+app.post('/book/edit', upload.none(),(req, res) => {
+    let id = req.query.id;
+    let book = req.body;
+    let updateQuery = `update books set name='${book.name}', price=${book.price}, quantity=${book.quantity}, author=${book.author} where id=${id}`;
+    connection.query(updateQuery, (err, result) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect('/')
+        }
+    })
+})
+
+app.get('/book/delete', (req, res) => {
+    let id = req.query.id;
+    let deleteQuery = `delete from books where id=${id}`;
+    connection.query(deleteQuery, (err, result) => {
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect('/');
         }
     })
 })

@@ -1,0 +1,12 @@
+<% for(let book of books){%>
+    <tr>
+      <th scope="row"><%=book.id%></th>
+      <td><%=book.name%></td>
+      <td><%=book.price%></td>
+      <td><%=book.quantity%></td>
+      <td><%=book.author%></td>
+      <td><button type="submit" class="btn btn-light"><a href="/book/edit?id=<%=book.id%>">Sửa</a></button></td>
+      <td><button type="submit" class="btn btn-danger"><a href="/book/delete?id=<%=book.id%>">Xóa</a></button></td>
+      <td><button type="submit" class="btn btn-info"><a href="/book/detail?id=<%=book.id%>">Xem chi tiết</a></button></td>
+    </tr>
+<%}%>
